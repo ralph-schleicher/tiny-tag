@@ -1,0 +1,52 @@
+/* -*- mode: css -*- */
+
+@foreground: #212121; /* grey 900 */
+@background: #F5F5F5; /* grey 100 */
+
+body {
+  color: @foreground;
+  background-color: white;
+  font-family: sans-serif;
+  padding: 2em;
+  min-width: 24em;
+  max-width: 44em;
+}
+
+.top {
+  margin-top: 0px;
+}
+
+.bottom {
+  margin-bottom: 0px;
+}
+
+div.form {
+  color: @foreground;
+  background-color: @background;
+  padding: 2em;
+}
+
+div.tag {
+  color: #E65100;
+  background-color: white;
+  font-size: 175%;
+  font-weight: bold;
+  padding: 1em 0px;
+  width: 100%;
+  text-align: center;
+}
+
+div.footnotes {
+  border-top: 1px solid @foreground;
+  font-size: small;
+}
+
+a {
+  color: inherit;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+}

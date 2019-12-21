@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Tiny Tag Web Service</title>
+  <style type="text/css">
+   body{color:#212121;background-color:#fff;font-family:sans-serif;padding:2em;min-width:24em;max-width:44em}
+   .top{margin-top:0}
+   .bottom{margin-bottom:0}
+   div.form{color:#212121;background-color:#F5F5F5;padding:2em}
+   div.tag{color:#E65100;background-color:#fff;font-size:175%;font-weight:700;padding:1em 0;width:100%;text-align:center}
+   div.footnotes{border-top:1px solid #212121;font-size:small}
+   a{color:inherit;background-color:transparent;text-decoration:none}
+   table{border-collapse:collapse}
+  </style>
+ </head>
+ <body>
+  <h1 class="top">Tiny Tags</h1>
+  <p>A tiny tag is a short unique identifier.  It can be used like a
+   random <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a>.
+   Since the namespace of tiny tags is much smaller than the namespace
+   of UUIDs, a tiny tag should be allocated (assigned, registered) at
+   a central place before it is used as an identifier.  The central
+   place to do so is this web service.</p>
+  <p>A tiny tag is a sequence of at least five characters.  Valid
+   characters are the Latin
+   small<a href="#fn1" class="fnref"><sup>1</sup></a> letters a to z
+   and the unambiguous<a href="#fn2" class="fnref"><sup>2</sup></a>
+   digits 3, 4, 7, and 8.  Thus, the number base is 30.</p>
+  <h2>Interactive Allocation Form</h2>
+  <p>Select your desired tag length and allocate a new tag by
+   clicking on the <em>Allocate</em> button.</p>
+  <div class="form">
+   <!-- TMPL_IF FORM -->
+   <form action="/index.html" method="post">
+    <fieldset>
+     <legend>Tag Length</legend>
+     <!-- TMPL_LOOP FORM -->
+     <input type="radio" name="length" value="<!-- TMPL_VAR VALUE -->"<!-- TMPL_IF CHECKED --> checked<!-- /TMPL_IF -->>
+     <!-- TMPL_IF VALUE -->
+     <!-- TMPL_VAR VALUE --> characters<!-- TMPL_IF EXAMPLE -->, e.g. <code><!-- TMPL_VAR EXAMPLE --></code><!-- /TMPL_IF -->
+     <!-- TMPL_ELSE -->
+     Random number of characters
+     <!-- /TMPL_IF -->
+     <br>
+     <!-- /TMPL_LOOP -->
+    </fieldset>
+    <p><input type="submit" value="Allocate"></p>
+   </form>
+   <!-- /TMPL_IF -->
+   <p>Your tiny tag is:</p>
+   <div class="tag">
+    <code><!-- TMPL_IF TAG --><!-- TMPL_VAR TAG --><!-- TMPL_ELSE -->&nbsp;<!-- /TMPL_IF --></code>
+   </div>
+   <form action="/index.html" method="get">
+    <input type="hidden" name="length" value="<!-- TMPL_VAR LENGTH -->">
+    <p class="bottom"><input type="submit" value="Clear"></p>
+   </form>
+  </div>
+  <h2>REST Application Programming Interface</h2>
+  <p>You can allocate new tags non-interactively via the REST API of
+   this web service.  The REST end-point for allocating a new tag is
+   <code>_tag</code>.</p>
+  <dl>
+   <dt>GET <code>/_tag</code></dt>
+   <dd>Allocate a new tag with a random number of characters.</dd>
+   <dt>GET <code>/_tag?length=8</code></dt>
+   <dd>Allocate a new tag with a fixed number of characters (here 8).</dd>
+  </dl>
+  <p>Return value is the allocated tag.</p>
+  <h3>Examples</h3>
+  <p>Using the <code>curl</code> program on the command line.</p>
+  <p>
+   <code>curl -kL <!-- TMPL_VAR BASE -->/_tag</code><br>
+   &ensp;&xrArr;&ensp;<code>vmq4fq</code>
+  </p>
+  <p>
+   <code>curl -kL <!-- TMPL_VAR BASE -->/_tag?length=8</code><br>
+   &ensp;&xrArr;&ensp;<code>r3fqotd4</code>
+  </p>
+  <p>
+   <code>curl -kL -H "Accept: application/json" <!-- TMPL_VAR BASE -->/_tag</code><br>
+   &ensp;&xrArr;&ensp;<code>{"tag":"vmq4fq","length":6}</code>
+  </p>
+  <p>The <code>-k</code> (or <code>--insecure</code>)
+   and <code>-L</code> (or <code>--location</code>)
+   option enable HTTPS redirection.</p>
+  <div class="footnotes">
+   <p><strong>Footnotes</strong></p>
+   <ol class="bottom">
+    <li id="fn1">We only use small letters so that the
+     identifier is case insensitive.</li>
+    <li id="fn2">We don't use the ambigous digits
+     0&nbsp;&xharr;&nbsp;o, 1&nbsp;&xharr;&nbsp;l,
+     2&nbsp;&xharr;&nbsp;z, 5&nbsp;&xharr;&nbsp;s,
+     6&nbsp;&xharr;&nbsp;b, and 9&nbsp;&xharr;&nbsp;g,
+     9&nbsp;&xharr;&nbsp;q.</li>
+   </ol>
+  </div>
+ </body>
+</html>

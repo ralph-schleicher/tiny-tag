@@ -1,0 +1,8 @@
+body{color:#212121;background-color:#fff;font-family:sans-serif;padding:2em;min-width:24em;max-width:44em}
+.top{margin-top:0}
+.bottom{margin-bottom:0}
+div.form{color:#212121;background-color:#F5F5F5;padding:2em}
+div.tag{color:#E65100;background-color:#fff;font-size:175%;font-weight:700;padding:1em 0;width:100%;text-align:center}
+div.footnotes{border-top:1px solid #212121;font-size:small}
+a{color:inherit;background-color:transparent;text-decoration:none}
+table{border-collapse:collapse}
